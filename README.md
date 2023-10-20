@@ -28,7 +28,7 @@ First, in the src/main/resources/application.proprties file, ensure the package 
 quarkus.package.type=mutable-jar
 
 quarkus.live-reload.instrumentation=true
-quarkus.live-reload.password=123456
+quarkus.live-reload.password={password}
 ```
 
 Next, package it:
