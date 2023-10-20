@@ -4,64 +4,50 @@ This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
 
-## Running the application in dev mode
+## Launching the application with LaunchThisApp
 
-You can run your application in dev mode that enables live coding using:
+First, ensure the package type is set to uber-jar in the src/main/resources/application.properties file:
 
-```shell script
-./mvnw compile quarkus:dev
+```
+quarkus.package.type=uber-jar
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
-
-## Packaging and running the application
-
-The application can be packaged using:
+Next, package it:
 
 ```shell script
 ./mvnw package
 ```
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+Finally, upload the target/booksnbeer-quarkus-pg-1.0-SNAPSHOT-runner.jar file via the https://launchthis.app homepage.
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+## Running the application in dev mode with LaunchThisApp
 
-If you want to build an _über-jar_, execute the following command:
+First, in the src/main/resources/application.proprties file, ensure the package type is set to uber-jar and a live reload password is set:
 
-```shell script
-./mvnw package -Dquarkus.package.type=uber-jar
+```
+quarkus.package.type=mutable-jar
+
+quarkus.live-reload.instrumentation=true
+quarkus.live-reload.password=123456
 ```
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
-
-## Creating a native executable
-
-You can create a native executable using:
+Next, package it:
 
 ```shell script
-./mvnw package -Pnative
+./mvnw package
 ```
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
+Then, create an archive of the target/quarkus-app folder:
 
-```shell script
-./mvnw package -Pnative -Dquarkus.native.container-build=true
+```
+cd target
+tar -zcvf booksnbeer-quarkus.tar.gz quarkus-app
 ```
 
-You can then execute your native executable with: `./target/booksnbeer-1.0-SNAPSHOT-runner`
+Then, upload the target/booksnbeer-quarkus.tar.gz file via the https://launchthis.app homepage.
 
-If you want to learn more about building native executables, please consult https://quarkus.io/guides/maven-tooling.
+Finally, run the application locally in Quarkus remote dev mode:
 
-## Related Guides
-
-- SmallRye GraphQL ([guide](https://quarkus.io/guides/microprofile-graphql)): Create GraphQL Endpoints using the
-  code-first approach from MicroProfile GraphQL
-
-## Provided Code
-
-### SmallRye GraphQL
-
-Start coding with this Hello GraphQL Query
-
-[Related guide section...](https://quarkus.io/guides/smallrye-graphql)
+```
+./mvnw quarkus:remote-dev -Ddebug=false -Dquarkus.live-reload.url=https://{uuid}-launchthis.app
+```
